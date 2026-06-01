@@ -24,6 +24,6 @@ func main() {
 	}
 }
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "OK")
+func healthHandler(writer http.ResponseWriter, reader *http.Request) {
+	fmt.Fprintln(writer, "OK")
 }
