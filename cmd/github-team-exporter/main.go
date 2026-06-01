@@ -5,10 +5,19 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/mike-rae/engineering-observability-dashboard/internal/config"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
+	cfg := config.Load()
+
+	log.Printf(
+		"Loaded config for %s/%s",
+		cfg.GitHubOwner,
+		cfg.GitHubRepo,
+	)
+
 	http.HandleFunc("/health", healthHandler)
 	http.Handle("/metrics", promhttp.Handler())
 
