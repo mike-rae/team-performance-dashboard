@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/mike-rae/engineering-observability-dashboard/internal/config"
+	"github.com/mike-rae/engineering-observability-dashboard/internal/github"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -18,6 +19,19 @@ func main() {
 		cfg.GitHubRepo,
 	)
 
+	ghClient := github.NewClient(cfg.GitHubToken)
+
+	openPRs, err := github.OpenPullRequestCount(
+		ghClient,
+		cfg.GitHubOwner,
+		cfg.GitHubRepo,
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Open PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, openPRs)
+
 	http.HandleFunc("/health", healthHandler)
 	http.Handle("/metrics", promhttp.Handler())
 
@@ -27,7 +41,7 @@ func main() {
 	log.Printf("health endpoint:  http://localhost:%s/health", port)
 	log.Printf("metrics endpoint: http://localhost:%s/metrics", port)
 
-	err := http.ListenAndServe(":"+port, nil)
+	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
