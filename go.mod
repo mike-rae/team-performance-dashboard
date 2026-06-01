@@ -1,4 +1,4 @@
-module github.com/mike-rae/team-performance-dashboard
+module github.com/mike-rae/engineering-observability-dashboard
 
 go 1.24
 
