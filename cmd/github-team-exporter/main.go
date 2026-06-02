@@ -7,11 +7,14 @@ import (
 
 	"github.com/mike-rae/engineering-observability-dashboard/internal/config"
 	"github.com/mike-rae/engineering-observability-dashboard/internal/github"
+	"github.com/mike-rae/engineering-observability-dashboard/internal/metrics"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
 	cfg := config.Load()
+
+	metrics.Register()
 
 	log.Printf(
 		"Loaded config for %s/%s",
@@ -31,6 +34,11 @@ func main() {
 	}
 
 	log.Printf("Open PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, openPRs)
+
+	metrics.OpenPullRequests.WithLabelValues(
+		cfg.GitHubOwner,
+		cfg.GitHubRepo,
+	).Set(float64(openPRs))
 
 	http.HandleFunc("/health", healthHandler)
 	http.Handle("/metrics", promhttp.Handler())
