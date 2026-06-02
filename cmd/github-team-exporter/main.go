@@ -24,21 +24,41 @@ func main() {
 
 	ghClient := github.NewClient(cfg.GitHubToken)
 
-	openPRs, err := github.OpenPullRequestCount(
-		ghClient,
-		cfg.GitHubOwner,
-		cfg.GitHubRepo,
-	)
-	if err != nil {
-		log.Fatal(err)
+	{
+		openPRs, err := github.OpenPullRequestCount(
+			ghClient,
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Printf("Open PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, openPRs)
+
+		metrics.OpenPullRequests.WithLabelValues(
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		).Set(float64(openPRs))
 	}
 
-	log.Printf("Open PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, openPRs)
+	{
+		closedPRs, err := github.ClosedPullRequestCount(
+			ghClient,
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	metrics.OpenPullRequests.WithLabelValues(
-		cfg.GitHubOwner,
-		cfg.GitHubRepo,
-	).Set(float64(openPRs))
+		log.Printf("Closed PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, closedPRs)
+
+		metrics.ClosedPullRequests.WithLabelValues(
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		).Set(float64(closedPRs))
+	}
 
 	http.HandleFunc("/health", healthHandler)
 	http.Handle("/metrics", promhttp.Handler())
@@ -49,7 +69,7 @@ func main() {
 	log.Printf("health endpoint:  http://localhost:%s/health", port)
 	log.Printf("metrics endpoint: http://localhost:%s/metrics", port)
 
-	err = http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

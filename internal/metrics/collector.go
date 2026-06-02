@@ -10,6 +10,15 @@ var OpenPullRequests = prometheus.NewGaugeVec(
 	[]string{"owner", "repo"},
 )
 
+var ClosedPullRequests = prometheus.NewGaugeVec(
+	prometheus.GaugeOpts{
+		Name: "github_closed_pull_requests",
+		Help: "Number of closed GitHub pull requests.",
+	},
+	[]string{"owner", "repo"},
+)
+
 func Register() {
 	prometheus.MustRegister(OpenPullRequests)
+	prometheus.MustRegister(ClosedPullRequests)
 }
