@@ -44,12 +44,19 @@ Completed:
 * Repository structure established
 * Go module initialised
 * Local development environment configured
-* WSL development workflow established
-* GitHub repository configured
-* Prometheus client integration
 * Health endpoint implemented
 * Metrics endpoint implemented
-* Initial package structure created
+
+### Milestone 2 – GitHub GraphQL Integration Complete ✅
+
+Completed:
+
+Environment configuration loading
+GitHub GraphQL client
+GitHub authentication using personal access token
+Pull request count query
+Custom Prometheus metric
+Pull request metrics by state
 
 ### Current Functionality
 
@@ -57,12 +64,20 @@ The exporter currently provides:
 
 * `/health`
 * `/metrics`
+* GitHub pull request metrics by state
 
-The exporter does not yet:
+Current custom metric:
 
-* Query GitHub GraphQL
-* Collect repository metrics
-* Integrate with Prometheus scraping
+```bash
+github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="open"}
+github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="closed"}
+github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="merged"}
+```
+
+The project does not yet:
+
+* Run through Docker Compose
+* Configure Prometheus scraping
 * Provide Grafana dashboards
 
 ## Getting Started

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/mike-rae/engineering-observability-dashboard/internal/config"
 	"github.com/mike-rae/engineering-observability-dashboard/internal/github"
@@ -24,40 +25,31 @@ func main() {
 
 	ghClient := github.NewClient(cfg.GitHubToken)
 
-	openPRs, err := github.PullRequestCount(
-		ghClient,
-		cfg.GitHubOwner,
-		cfg.GitHubRepo,
+	states := []string{
 		"OPEN",
-	)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	closedPRs, err := github.PullRequestCount(
-		ghClient,
-		cfg.GitHubOwner,
-		cfg.GitHubRepo,
 		"CLOSED",
-	)
-	if err != nil {
-		log.Fatal(err)
+		"MERGED",
 	}
 
-	log.Printf("\nOpen PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, openPRs)
-	log.Printf("\nClosed PRs for %s/%s: %d", cfg.GitHubOwner, cfg.GitHubRepo, closedPRs)
+	for _, state := range states {
 
-	metrics.PullRequests.WithLabelValues(
-		cfg.GitHubOwner,
-		cfg.GitHubRepo,
-		"open",
-	).Set(float64(openPRs))
+		count, err := github.PullRequestCount(
+			ghClient,
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+			state,
+		)
 
-	metrics.PullRequests.WithLabelValues(
-		cfg.GitHubOwner,
-		cfg.GitHubRepo,
-		"closed",
-	).Set(float64(closedPRs))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		metrics.PullRequests.WithLabelValues(
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+			strings.ToLower(state),
+		).Set(float64(count))
+	}
 
 	http.HandleFunc("/health", healthHandler)
 	http.Handle("/metrics", promhttp.Handler())
@@ -68,7 +60,7 @@ func main() {
 	log.Printf("health endpoint:  http://localhost:%s/health", port)
 	log.Printf("metrics endpoint: http://localhost:%s/metrics", port)
 
-	err = http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

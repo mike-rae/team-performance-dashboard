@@ -150,3 +150,77 @@ Screenshot: [docs/screenshots/milestone-1/prometheus-metrics.png](docs/screensho
 ### Status
 
 Milestone 1 Complete ✅
+
+---
+
+# 2026-06-02
+
+## Milestone 2 – GitHub GraphQL Integration
+
+### Objective
+
+Connect the Go exporter to GitHub using the GitHub GraphQL API and expose the first GitHub-derived Prometheus metrics.
+
+### What Was Completed
+
+* Added environment configuration loading from `.env`
+* Added GitHub token, owner, and repository configuration
+* Created GitHub GraphQL client
+* Authenticated with GitHub using a personal access token
+* Queried pull request counts by state
+* Refactored pull request queries into a reusable `PullRequestCount` function
+* Added custom Prometheus metric for pull requests
+* Exposed pull request counts using labels:
+
+  * `state="open"`
+  * `state="closed"`
+  * `state="merged"`
+
+### Current Metric
+
+```text
+github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="open"} 0
+github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="closed"} 1
+github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="merged"} 1
+```
+
+### Verification
+
+Command:
+
+```bash
+curl http://localhost:2112/metrics | grep github_pull_requests
+```
+
+Screenshot: [docs/screenshots/milestone-2/github-pull-request-metrics.png](docs/screenshots/milestone-2/github-pull-request-metrics.png)
+
+### Challenges Encountered
+
+#### GraphQL State Argument
+
+The first version passed a single pull request state directly to the GraphQL query.
+
+GitHub expected a list of pull request states, so the query needed to use:
+
+```go
+graphql:"pullRequests(states: [$state])"
+```
+
+### Lessons Learned
+
+* GitHub GraphQL is a good fit for targeted engineering metrics.
+* Prometheus labels are better than separate metric names for related states.
+* A metric returning `0` is still a valid and useful result.
+* Small reusable query functions keep the exporter simpler as more metrics are added.
+
+### Next Milestone
+
+* Add Docker Compose
+* Run the exporter in a container
+* Add Prometheus
+* Configure Prometheus to scrape the exporter
+* Prepare for Grafana dashboarding
+
+### Status
+
+Milestone 2 Complete ✅
