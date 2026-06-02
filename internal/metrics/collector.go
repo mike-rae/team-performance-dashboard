@@ -2,23 +2,14 @@ package metrics
 
 import "github.com/prometheus/client_golang/prometheus"
 
-var OpenPullRequests = prometheus.NewGaugeVec(
+var PullRequests = prometheus.NewGaugeVec(
 	prometheus.GaugeOpts{
-		Name: "github_open_pull_requests",
-		Help: "Number of currently open GitHub pull requests.",
+		Name: "github_pull_requests",
+		Help: "Number of GitHub pull requests by state.",
 	},
-	[]string{"owner", "repo"},
-)
-
-var ClosedPullRequests = prometheus.NewGaugeVec(
-	prometheus.GaugeOpts{
-		Name: "github_closed_pull_requests",
-		Help: "Number of closed GitHub pull requests.",
-	},
-	[]string{"owner", "repo"},
+	[]string{"owner", "repo", "state"},
 )
 
 func Register() {
-	prometheus.MustRegister(OpenPullRequests)
-	prometheus.MustRegister(ClosedPullRequests)
+	prometheus.MustRegister(PullRequests)
 }
