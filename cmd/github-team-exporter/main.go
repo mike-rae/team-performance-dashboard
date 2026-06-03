@@ -74,7 +74,6 @@ func main() {
 				cfg.GitHubOwner,
 				cfg.GitHubRepo,
 				fmt.Sprintf("%d", pr.Number),
-				pr.Title,
 			).Set(ageDays)
 
 			if ageDays >= float64(staleThresholdDays) {

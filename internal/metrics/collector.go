@@ -15,7 +15,7 @@ var PullRequestAgeDays = prometheus.NewGaugeVec(
 		Name: "github_pull_request_age_days",
 		Help: "Age of open GitHub pull requests in days.",
 	},
-	[]string{"owner", "repo", "number", "title"},
+	[]string{"owner", "repo", "number"},
 )
 
 var PullRequestsStale = prometheus.NewGaugeVec(
