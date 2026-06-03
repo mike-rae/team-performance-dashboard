@@ -332,3 +332,98 @@ Resolution:
 ### Status
 
 Milestone 3 Complete ✅
+
+---
+
+# 2026-06-03
+
+## Milestone 4 – Grafana Dashboard
+
+### Objective
+
+Visualise GitHub engineering metrics collected through the exporter and Prometheus using Grafana.
+
+### What Was Completed
+
+#### Grafana
+
+- Added Grafana to Docker Compose
+- Connected Grafana to Prometheus
+- Configured Prometheus as a data source
+
+#### Dashboard
+
+Created the first Engineering Observability Dashboard.
+
+Current dashboard metrics:
+
+- Open Pull Requests
+- Closed Pull Requests
+- Merged Pull Requests
+- Stale Pull Requests
+- Waiting For Review
+- Oldest Open PR Age
+- Average Open PR Age
+
+### Architecture
+
+The project now supports the following flow:
+
+```text
+GitHub GraphQL API
+        ↓
+Go Exporter
+        ↓
+Prometheus
+        ↓
+Grafana
+```
+
+### Verification
+
+Verified:
+
+- Grafana startup
+- Prometheus connectivity
+- Metric visualisation
+- Threshold-based status indicators
+
+Screenshot: [docs/screenshots/milestone-4/grafana-dashboard-overview.png](docs/screenshots/milestone-4/grafana-dashboard-overview.png)
+
+### Challenges Encountered
+
+#### Grafana Thresholds
+
+Threshold values were configured correctly but panel colours were not changing.
+
+Cause:
+
+The panel colour scheme was not configured to use threshold colours.
+
+Resolution:
+
+Set:
+
+```text
+Color Scheme = From thresholds
+```
+
+This allowed dashboard panels to correctly display green, yellow and red states.
+
+### Lessons Learned
+
+- Grafana thresholds and colour schemes are configured independently.
+- KPI-style Stat panels are often more useful than complex visualisations.
+- Prometheus labels should be carefully considered to avoid excessive metric cardinality.
+- Engineering observability metrics are more useful when they highlight flow bottlenecks rather than simple activity counts.
+
+### Next Milestone
+
+- Time to first review
+- Average time to merge
+- Review turnaround metrics
+- Engineering flow analytics
+
+### Status
+
+Milestone 4 Complete ✅

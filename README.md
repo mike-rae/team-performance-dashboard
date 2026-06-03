@@ -69,17 +69,17 @@ Completed:
 - Prometheus metric scraping
 - End-to-end observability pipeline
 
+### Milestone 4 – Grafana Dashboard Complete ✅
+
+Completed:
+
+- Grafana integration
+- Prometheus datasource configuration
+- Engineering observability dashboard
+- Dashboard thresholds and KPI visualisation
+- Pull request flow metrics visualisation
+
 ## Current Architecture
-
-```text
-GitHub GraphQL API
-        ↓
-Go Exporter
-        ↓
-Prometheus
-```
-
-## Target Architecture
 
 ```text
 GitHub GraphQL API
@@ -89,6 +89,20 @@ Go Exporter
 Prometheus
         ↓
 Grafana
+```
+
+## Next Target Architecture
+
+```text
+GitHub GraphQL API
+        ↓
+Go Exporter
+        ↓
+Prometheus
+        ↓
+Grafana
+        ↓
+Engineering Flow Analytics
 ```
 
 ## Current Functionality
@@ -109,10 +123,11 @@ github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard"
 ```
 
 The project does not yet provide:
-* Grafana dashboards
-* Engineering flow visualisations
-* Multi-repository support
-* Historical trend analysis
+- Multi-repository support
+- Historical trend analysis
+- Time-to-review metrics
+- Time-to-merge metrics
+- Review turnaround metrics
 
 ---
 
@@ -227,29 +242,27 @@ Screenshot: [docs/screenshots/milestone-3/prometheus-target-up.png](docs/screens
 
 Screenshot: [docs/screenshots/milestone-3/prometheus-github-pull-requests-query.png](docs/screenshots/milestone-3/prometheus-github-pull-requests-query.png)
 
+### Milestone 4 – Engineering Observability Dashboard
+
+Screenshot: [docs/screenshots/milestone-4/grafana-dashboard-overview.png](docs/screenshots/milestone-4/grafana-dashboard-overview.png)
+
 ---
 
 ## Roadmap
 
-### Milestone 4
-
-- Grafana integration
-- Dashboard provisioning
-- First engineering observability dashboard
-- Pull request visualisation
-
 ### Milestone 5
 
-- Additional engineering flow metrics
-- Pull request age analysis
-- Review activity metrics
-- Throughput metrics
+- Time to first review
+- Average time to merge
+- Review turnaround metrics
+- Review backlog metrics
 
 ### Milestone 6
 
 - Multi-repository support
 - Historical trend analysis
 - Dashboard improvements
+- Team-level aggregation
 
 ## Project Journey
 
