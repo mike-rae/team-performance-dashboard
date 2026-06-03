@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/mike-rae/engineering-observability-dashboard/internal/config"
 	"github.com/mike-rae/engineering-observability-dashboard/internal/github"
@@ -49,6 +50,55 @@ func main() {
 			cfg.GitHubRepo,
 			strings.ToLower(state),
 		).Set(float64(count))
+	}
+
+	// get Open PR details
+	{
+		openPRDetails, err := github.OpenPullRequestDetails(
+			ghClient,
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		staleThresholdDays := 7
+		staleCount := 0
+		waitingReviewCount := 0
+
+		for _, pr := range openPRDetails {
+			ageDays := time.Since(pr.CreatedAt).Hours() / 24
+
+			metrics.PullRequestAgeDays.WithLabelValues(
+				cfg.GitHubOwner,
+				cfg.GitHubRepo,
+				fmt.Sprintf("%d", pr.Number),
+				pr.Title,
+			).Set(ageDays)
+
+			if ageDays >= float64(staleThresholdDays) {
+				staleCount++
+			}
+
+			if pr.ReviewRequestsCount > 0 && pr.ReviewsCount == 0 {
+				waitingReviewCount++
+			}
+		}
+
+		metrics.PullRequestsStale.WithLabelValues(
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		).Set(float64(staleCount))
+
+		metrics.PullRequestsWaitingReview.WithLabelValues(
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		).Set(float64(waitingReviewCount))
+
+		log.Printf("Open PR details collected: %d", len(openPRDetails))
+		log.Printf("Stale PRs: %d", staleCount)
+		log.Printf("Waiting review PRs: %d", waitingReviewCount)
 	}
 
 	http.HandleFunc("/health", healthHandler)
