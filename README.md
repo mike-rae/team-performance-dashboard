@@ -41,24 +41,57 @@ Grafana
 
 Completed:
 
-* Repository structure established
-* Go module initialised
-* Local development environment configured
-* Health endpoint implemented
-* Metrics endpoint implemented
+- Repository structure established
+- Go module initialised
+- Local development environment configured
+- Health endpoint implemented
+- Metrics endpoint implemented
 
 ### Milestone 2 – GitHub GraphQL Integration Complete ✅
 
 Completed:
 
-Environment configuration loading
-GitHub GraphQL client
-GitHub authentication using personal access token
-Pull request count query
-Custom Prometheus metric
-Pull request metrics by state
+- Environment configuration loading
+- GitHub GraphQL client
+- GitHub authentication using personal access token
+- Pull request count query
+- Custom Prometheus metrics
+- Pull request metrics by state
 
-### Current Functionality
+### Milestone 3 – Docker & Prometheus Integration Complete ✅
+
+Completed:
+
+- Dockerfile implementation
+- Docker Compose environment
+- Prometheus configuration
+- Exporter containerisation
+- Prometheus metric scraping
+- End-to-end observability pipeline
+
+## Current Architecture
+
+```text
+GitHub GraphQL API
+        ↓
+Go Exporter
+        ↓
+Prometheus
+```
+
+## Target Architecture
+
+```text
+GitHub GraphQL API
+        ↓
+Go Exporter
+        ↓
+Prometheus
+        ↓
+Grafana
+```
+
+## Current Functionality
 
 The exporter currently provides:
 
@@ -67,18 +100,21 @@ The exporter currently provides:
 * GitHub pull request metrics by state
 
 Current custom metric:
-
-```bash
+```text
 github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="open"}
+
 github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="closed"}
+
 github_pull_requests{owner="mike-rae",repo="engineering-observability-dashboard",state="merged"}
 ```
 
-The project does not yet:
+The project does not yet provide:
+* Grafana dashboards
+* Engineering flow visualisations
+* Multi-repository support
+* Historical trend analysis
 
-* Run through Docker Compose
-* Configure Prometheus scraping
-* Provide Grafana dashboards
+---
 
 ## Getting Started
 
@@ -179,32 +215,41 @@ Screenshot: [docs/screenshots/milestone-1/health-endpoint.png](docs/screenshots/
 
 Screenshot: [docs/screenshots/milestone-1/prometheus-metrics.png](docs/screenshots/milestone-1/prometheus-metrics.png)
 
+### Milestone 2 – GitHub Pull Request Metrics
+
+Screenshot: [docs/screenshots/milestone-2/github-pull-request-metrics.png](docs/screenshots/milestone-2/github-pull-request-metrics.png)
+
+### Milestone 3 – Prometheus Target Status
+
+Screenshot: [docs/screenshots/milestone-3/prometheus-target-up.png](docs/screenshots/milestone-3/prometheus-target-up.png)
+
+### Milestone 3 – Pull Request Metrics Query
+
+Screenshot: [docs/screenshots/milestone-3/prometheus-github-pull-requests-query.png](docs/screenshots/milestone-3/prometheus-github-pull-requests-query.png)
+
+---
+
 ## Roadmap
-
-### Milestone 2
-
-* Environment configuration
-* GitHub GraphQL client
-* First authenticated GitHub query
-* Pull request collection
-
-### Milestone 3
-
-* Custom GitHub metrics
-* Prometheus scrape configuration
-* Docker Compose setup
 
 ### Milestone 4
 
-* Grafana integration
-* Dashboard provisioning
-* First engineering observability dashboard
+- Grafana integration
+- Dashboard provisioning
+- First engineering observability dashboard
+- Pull request visualisation
 
 ### Milestone 5
 
-* Multi-repository support
-* Additional engineering flow metrics
-* Trend analysis
+- Additional engineering flow metrics
+- Pull request age analysis
+- Review activity metrics
+- Throughput metrics
+
+### Milestone 6
+
+- Multi-repository support
+- Historical trend analysis
+- Dashboard improvements
 
 ## Project Journey
 

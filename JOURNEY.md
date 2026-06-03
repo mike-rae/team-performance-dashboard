@@ -153,7 +153,7 @@ Milestone 1 Complete ✅
 
 ---
 
-# 2026-06-02
+# 2026-06-03
 
 ## Milestone 2 – GitHub GraphQL Integration
 
@@ -224,3 +224,111 @@ graphql:"pullRequests(states: [$state])"
 ### Status
 
 Milestone 2 Complete ✅
+
+---
+
+# 2026-06-02
+
+## Milestone 3 – Docker & Prometheus Integration
+
+### Objective
+
+Containerise the exporter and establish the first end-to-end observability pipeline using Prometheus.
+
+### What Was Completed
+
+#### Containerisation
+
+- Created Dockerfile for the exporter
+- Implemented multi-stage build process
+- Added runtime image optimisation
+
+#### Prometheus
+
+- Created Prometheus configuration
+- Configured scrape targets
+- Connected Prometheus to the exporter
+- Verified successful metric collection
+
+#### Docker Compose
+
+Created a local development environment containing:
+
+```text
+Exporter
+Prometheus
+```
+
+with service-to-service communication through Docker networking.
+
+### Architecture
+
+The project now supports the following flow:
+
+```text
+GitHub GraphQL API
+        ↓
+Go Exporter
+        ↓
+Prometheus
+```
+
+### Verification
+
+#### Prometheus Target Health
+
+Verified exporter target status:
+
+```text
+UP
+```
+
+Screenshot: [docs/screenshots/milestone-3/prometheus-target-up.png](docs/screenshots/milestone-3/prometheus-target-up.png)
+
+#### Pull Request Metrics
+
+Executed:
+
+```promql
+github_pull_requests
+```
+
+and verified metric ingestion.
+
+Screenshot: [docs/screenshots/milestone-3/prometheus-github-pull-requests-query.png](docs/screenshots/milestone-3/prometheus-github-pull-requests-query.png)
+
+### Challenges Encountered
+
+#### TLS Certificate Validation
+
+The exporter initially failed to connect to GitHub from within Docker.
+
+Error:
+
+```text
+x509: certificate signed by unknown authority
+```
+
+Resolution:
+
+- Added `ca-certificates` package to the runtime image
+- Rebuilt containers without cache
+
+### Lessons Learned
+
+- Multi-stage Docker builds are straightforward for Go applications.
+- Prometheus requires very little configuration to begin collecting useful metrics.
+- Container networking simplifies service discovery.
+- End-to-end validation is easier when each milestone introduces only one major component.
+
+### Next Milestone
+
+- Add Grafana
+- Configure Grafana provisioning
+- Create first engineering observability dashboard
+- Visualise pull request metrics
+- Establish dashboard screenshots and sharing assets
+
+### Status
+
+Milestone 3 Complete ✅
