@@ -1,6 +1,10 @@
 # Engineering Observability Dashboard
 
-A build-it-yourself engineering observability platform built with Go, GitHub GraphQL, Prometheus, Grafana, and Docker.
+A simple engineering observability platform built using Go, GitHub GraphQL, Prometheus and Grafana.
+
+## Dashboard Preview
+
+![Engineering Observability Dashboard](docs/screenshots/milestone-4/grafana-dashboard-overview.png)
 
 ## Overview
 
