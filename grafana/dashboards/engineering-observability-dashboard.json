@@ -4,19 +4,19 @@
   "metadata": {
     "name": "adrm9gd",
     "namespace": "default",
-    "uid": "00b423e1-a520-485e-ad92-4d4df44af50c",
-    "resourceVersion": "1780518289068983",
-    "generation": 27,
-    "creationTimestamp": "2026-06-03T12:52:53Z",
+    "uid": "219275e6-c7e8-4a2b-8f81-73c246d14d8e",
+    "resourceVersion": "1780567975283007",
+    "generation": 4,
+    "creationTimestamp": "2026-06-04T10:06:38Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "4010406470651904"
+      "grafana.app/deprecatedInternalID": "4331071048794112"
     },
     "annotations": {
-      "grafana.app/createdBy": "user:cfo0sk3t1msqoa",
+      "grafana.app/createdBy": "user:bfo3ypai56v40a",
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/updatedBy": "user:cfo0sk3t1msqoa",
-      "grafana.app/updatedTimestamp": "2026-06-03T20:24:49Z"
+      "grafana.app/updatedBy": "user:bfo3ypai56v40a",
+      "grafana.app/updatedTimestamp": "2026-06-04T10:12:55Z"
     }
   },
   "spec": {
@@ -64,7 +64,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -153,7 +153,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -238,7 +238,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -326,7 +326,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -411,7 +411,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -496,7 +496,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -517,7 +517,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -539,7 +539,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
