@@ -6,11 +6,18 @@ import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
 
+import io.prometheus.metrics.core.metrics.Gauge;
 import io.prometheus.metrics.exporter.httpserver.HTTPServer;
 
 public class App {
     public static void main(String[] args) throws IOException {
         startHealthServer();
+
+        Gauge.builder()
+                .name("java_exporter_metadata")
+                .help("Java exporter information.")
+                .register()
+                .set(1);
 
         HTTPServer metricsServer = HTTPServer.builder()
                 .port(2113)
