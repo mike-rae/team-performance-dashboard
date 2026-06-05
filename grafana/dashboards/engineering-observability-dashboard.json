@@ -4,19 +4,19 @@
   "metadata": {
     "name": "adrm9gd",
     "namespace": "default",
-    "uid": "00b423e1-a520-485e-ad92-4d4df44af50c",
-    "resourceVersion": "1780518289068983",
-    "generation": 27,
-    "creationTimestamp": "2026-06-03T12:52:53Z",
+    "uid": "219275e6-c7e8-4a2b-8f81-73c246d14d8e",
+    "resourceVersion": "1780656232624009",
+    "generation": 22,
+    "creationTimestamp": "2026-06-04T10:06:38Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "4010406470651904"
+      "grafana.app/deprecatedInternalID": "4331071048794112"
     },
     "annotations": {
-      "grafana.app/createdBy": "user:cfo0sk3t1msqoa",
+      "grafana.app/createdBy": "user:bfo3ypai56v40a",
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/updatedBy": "user:cfo0sk3t1msqoa",
-      "grafana.app/updatedTimestamp": "2026-06-03T20:24:49Z"
+      "grafana.app/updatedBy": "user:bfo3ypai56v40a",
+      "grafana.app/updatedTimestamp": "2026-06-05T10:43:52Z"
     }
   },
   "spec": {
@@ -45,11 +45,11 @@
     "description": "Engineering flow dashboard built using Go, GitHub GraphQL, Prometheus and Grafana.\n\nMetrics currently include pull request volume, age, review status and stale work indicators.",
     "editable": true,
     "elements": {
-      "panel-4": {
+      "panel-10": {
         "kind": "Panel",
         "spec": {
-          "id": 4,
-          "title": "Open Pull Requests",
+          "id": 10,
+          "title": "Average Time To Merge",
           "description": "",
           "links": [],
           "data": {
@@ -64,7 +64,258 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
+                      },
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "avg(github_pull_request_time_to_merge_hours)",
+                        "legendFormat": "__auto",
+                        "range": true
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "hours",
+                  "decimals": 1,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 24,
+                        "color": "#EAB839"
+                      },
+                      {
+                        "value": 72,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-12": {
+        "kind": "Panel",
+        "spec": {
+          "id": 12,
+          "title": "Unreviewed Open PRs",
+          "description": "Show us how many PRs are pending review",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "prometheus",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "dfo3yvt6drw1sc"
+                      },
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "github_pull_requests_review_backlog",
+                        "legendFormat": "__auto",
+                        "range": true
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-13": {
+        "kind": "Panel",
+        "spec": {
+          "id": 13,
+          "title": "Merged PRs",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "prometheus",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "dfo3yvt6drw1sc"
+                      },
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "github_pull_requests{state=\"merged\"}",
+                        "legendFormat": "__auto",
+                        "range": true
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-14": {
+        "kind": "Panel",
+        "spec": {
+          "id": 14,
+          "title": "Open PRs",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "prometheus",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -88,7 +339,7 @@
             "version": "13.0.1",
             "spec": {
               "options": {
-                "colorMode": "background_solid",
+                "colorMode": "background",
                 "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
@@ -114,11 +365,178 @@
                         "color": "green"
                       },
                       {
-                        "value": 3,
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-15": {
+        "kind": "Panel",
+        "spec": {
+          "id": 15,
+          "title": "Closed PRs",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "prometheus",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "dfo3yvt6drw1sc"
+                      },
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "github_pull_requests{state=\"closed\"}",
+                        "legendFormat": "__auto",
+                        "range": true
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-4": {
+        "kind": "Panel",
+        "spec": {
+          "id": 4,
+          "title": "Avg Time To First Review",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "prometheus",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "dfo3yvt6drw1sc"
+                      },
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "avg(github_pull_request_time_to_first_review_hours)",
+                        "legendFormat": "__auto",
+                        "range": true
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "hours",
+                  "decimals": 1,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 23,
                         "color": "#EAB839"
                       },
                       {
-                        "value": 8,
+                        "value": 24,
                         "color": "dark-red"
                       }
                     ]
@@ -138,7 +556,7 @@
         "kind": "Panel",
         "spec": {
           "id": 5,
-          "title": "Stale Pull Requests",
+          "title": "Stale PRs",
           "description": "",
           "links": [],
           "data": {
@@ -153,7 +571,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -223,7 +641,7 @@
         "kind": "Panel",
         "spec": {
           "id": 6,
-          "title": "Waiting For Review",
+          "title": "Waiting Review",
           "description": "",
           "links": [],
           "data": {
@@ -238,7 +656,7 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
@@ -262,8 +680,8 @@
             "version": "13.0.1",
             "spec": {
               "options": {
-                "colorMode": "background",
-                "graphMode": "none",
+                "colorMode": "value",
+                "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
@@ -311,7 +729,7 @@
         "kind": "Panel",
         "spec": {
           "id": 7,
-          "title": "Oldest Open PR (Days)",
+          "title": "Oldest Open PR",
           "description": "",
           "links": [],
           "data": {
@@ -326,11 +744,11 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
-                        "expr": "max(github_pull_request_age_days) * 24",
+                        "expr": "max(github_pull_request_age_days)",
                         "legendFormat": "__auto",
                         "range": true
                       }
@@ -368,7 +786,8 @@
               },
               "fieldConfig": {
                 "defaults": {
-                  "unit": "hours",
+                  "unit": "days",
+                  "decimals": 2,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -377,7 +796,11 @@
                         "color": "green"
                       },
                       {
-                        "value": 80,
+                        "value": 7,
+                        "color": "#EAB839"
+                      },
+                      {
+                        "value": 14,
                         "color": "red"
                       }
                     ]
@@ -396,7 +819,7 @@
         "kind": "Panel",
         "spec": {
           "id": 8,
-          "title": "Average Open PR Age (Days)",
+          "title": "Average Open PR Age",
           "description": "",
           "links": [],
           "data": {
@@ -411,11 +834,11 @@
                       "group": "prometheus",
                       "version": "v0",
                       "datasource": {
-                        "name": "ffo0spypb0g00e"
+                        "name": "dfo3yvt6drw1sc"
                       },
                       "spec": {
                         "editorMode": "code",
-                        "expr": "avg(github_pull_request_age_days) * 24",
+                        "expr": "avg(github_pull_request_age_days)",
                         "legendFormat": "__auto",
                         "range": true
                       }
@@ -453,146 +876,8 @@
               },
               "fieldConfig": {
                 "defaults": {
-                  "unit": "hours",
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "palette-classic"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-9": {
-        "kind": "Panel",
-        "spec": {
-          "id": 9,
-          "title": "Pull Request States",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "prometheus",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "ffo0spypb0g00e"
-                      },
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "github_pull_requests{state=\"open\"}",
-                        "legendFormat": "Open PRs",
-                        "range": true
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "prometheus",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "ffo0spypb0g00e"
-                      },
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "github_pull_requests{state=\"closed\"}",
-                        "instant": false,
-                        "legendFormat": "Closed PRs",
-                        "range": true
-                      }
-                    },
-                    "refId": "B",
-                    "hidden": false
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "prometheus",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "ffo0spypb0g00e"
-                      },
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "github_pull_requests{state=\"merged\"}",
-                        "instant": false,
-                        "legendFormat": "Merged PRs",
-                        "range": true
-                      }
-                    },
-                    "refId": "C",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "gauge",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.3,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": true
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": false,
-                "sizing": "auto",
-                "sparkline": true,
-                "textMode": "auto"
-              },
-              "fieldConfig": {
-                "defaults": {
+                  "unit": "days",
+                  "decimals": 2,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -626,20 +911,20 @@
             "spec": {
               "x": 0,
               "y": 0,
-              "width": 7,
+              "width": 6,
               "height": 8,
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-4"
+                "name": "panel-14"
               }
             }
           },
           {
             "kind": "GridLayoutItem",
             "spec": {
-              "x": 8,
+              "x": 6,
               "y": 0,
-              "width": 7,
+              "width": 6,
               "height": 8,
               "element": {
                 "kind": "ElementReference",
@@ -650,8 +935,47 @@
           {
             "kind": "GridLayoutItem",
             "spec": {
-              "x": 16,
+              "x": 12,
               "y": 0,
+              "width": 6,
+              "height": 8,
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-7"
+              }
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "x": 18,
+              "y": 0,
+              "width": 6,
+              "height": 8,
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-8"
+              }
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "x": 0,
+              "y": 8,
+              "width": 7,
+              "height": 8,
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-12"
+              }
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "x": 8,
+              "y": 8,
               "width": 7,
               "height": 8,
               "element": {
@@ -663,13 +987,13 @@
           {
             "kind": "GridLayoutItem",
             "spec": {
-              "x": 0,
+              "x": 16,
               "y": 8,
-              "width": 23,
-              "height": 11,
+              "width": 8,
+              "height": 8,
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-9"
+                "name": "panel-4"
               }
             }
           },
@@ -677,25 +1001,38 @@
             "kind": "GridLayoutItem",
             "spec": {
               "x": 0,
-              "y": 19,
-              "width": 12,
+              "y": 16,
+              "width": 7,
               "height": 8,
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-7"
+                "name": "panel-10"
               }
             }
           },
           {
             "kind": "GridLayoutItem",
             "spec": {
-              "x": 12,
-              "y": 19,
-              "width": 12,
+              "x": 8,
+              "y": 16,
+              "width": 7,
               "height": 8,
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-8"
+                "name": "panel-13"
+              }
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "x": 16,
+              "y": 16,
+              "width": 8,
+              "height": 8,
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-15"
               }
             }
           }

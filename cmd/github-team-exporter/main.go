@@ -66,6 +66,8 @@ func main() {
 		staleThresholdDays := 7
 		staleCount := 0
 		waitingReviewCount := 0
+		withoutReviewers := 0
+		reviewBacklog := 0
 
 		for _, pr := range openPRDetails {
 			ageDays := time.Since(pr.CreatedAt).Hours() / 24
@@ -83,6 +85,24 @@ func main() {
 			if pr.ReviewRequestsCount > 0 && pr.ReviewsCount == 0 {
 				waitingReviewCount++
 			}
+
+			if pr.ReviewRequestsCount == 0 {
+				withoutReviewers++
+			}
+
+			if pr.FirstReviewAt != nil {
+				timeToFirstReviewHours := pr.FirstReviewAt.Sub(pr.CreatedAt).Hours()
+
+				metrics.PullRequestTimeToFirstReviewHours.WithLabelValues(
+					cfg.GitHubOwner,
+					cfg.GitHubRepo,
+					fmt.Sprintf("%d", pr.Number),
+				).Set(timeToFirstReviewHours)
+			}
+
+			if pr.ReviewsCount == 0 {
+				reviewBacklog++
+			}
 		}
 
 		metrics.PullRequestsStale.WithLabelValues(
@@ -95,9 +115,38 @@ func main() {
 			cfg.GitHubRepo,
 		).Set(float64(waitingReviewCount))
 
+		metrics.PullRequestsWithoutReviewers.WithLabelValues(
+			cfg.GitHubOwner,
+			cfg.GitHubRepo,
+		).Set(float64(withoutReviewers))
+
 		log.Printf("Open PR details collected: %d", len(openPRDetails))
 		log.Printf("Stale PRs: %d", staleCount)
 		log.Printf("Waiting review PRs: %d", waitingReviewCount)
+	}
+
+	mergedPRs, err := github.MergedPullRequests(
+		ghClient,
+		cfg.GitHubOwner,
+		cfg.GitHubRepo,
+	)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, pr := range mergedPRs {
+
+		timeToMergeHours :=
+			pr.MergedAt.Sub(pr.CreatedAt).Hours()
+
+		metrics.PullRequestTimeToMergeHours.
+			WithLabelValues(
+				cfg.GitHubOwner,
+				cfg.GitHubRepo,
+				fmt.Sprintf("%d", pr.Number),
+			).
+			Set(timeToMergeHours)
 	}
 
 	http.HandleFunc("/health", healthHandler)
@@ -109,7 +158,7 @@ func main() {
 	log.Printf("health endpoint:  http://localhost:%s/health", port)
 	log.Printf("metrics endpoint: http://localhost:%s/metrics", port)
 
-	err := http.ListenAndServe(":"+port, nil)
+	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

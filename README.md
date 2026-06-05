@@ -4,7 +4,7 @@ A simple engineering observability platform built using Go, GitHub GraphQL, Prom
 
 ## Dashboard Preview
 
-![Engineering Observability Dashboard](docs/screenshots/milestone-4/grafana-dashboard-overview.png)
+![Engineering Observability Dashboard](docs/screenshots/milestone-5/grafana-dashboard-overview.png)
 
 ## Overview
 
@@ -83,6 +83,18 @@ Completed:
 - Dashboard thresholds and KPI visualisation
 - Pull request flow metrics visualisation
 
+### Milestone 5 – Engineering Flow Metrics Complete ✅
+
+Completed:
+
+- GitHub GraphQL integration
+- Prometheus exporter
+- Docker deployment
+- Grafana dashboard
+- Engineering flow metrics
+- Pull request review metrics
+- Time to merge metrics
+
 ## Current Architecture
 
 ```text
@@ -93,6 +105,8 @@ Go Exporter
 Prometheus
         ↓
 Grafana
+        ↓
+Engineering Flow Insights
 ```
 
 ## Next Target Architecture
@@ -132,6 +146,40 @@ The project does not yet provide:
 - Time-to-review metrics
 - Time-to-merge metrics
 - Review turnaround metrics
+
+---
+
+## Current Metrics
+
+### Pull Request Volume
+
+- Open Pull Requests
+- Closed Pull Requests
+- Merged Pull Requests
+
+### Pull Request Health
+
+- Stale Pull Requests
+- Oldest Open Pull Request
+- Average Open Pull Request Age
+
+### Review Flow
+
+- Review Backlog
+- Waiting For Review
+- Average Time To First Review
+
+### Delivery Flow
+
+- Average Time To Merge
+
+---
+
+## Dashboard Screenshot
+
+### Engineering Flow Dashboard
+
+![Engineering Flow Dashboard](docs/screenshots/milestone-5/grafana-dashboard-overview.png)
 
 ---
 
@@ -250,23 +298,33 @@ Screenshot: [docs/screenshots/milestone-3/prometheus-github-pull-requests-query.
 
 Screenshot: [docs/screenshots/milestone-4/grafana-dashboard-overview.png](docs/screenshots/milestone-4/grafana-dashboard-overview.png)
 
+### Milestone 5 – Engineering Flow Metrics
+
+Screenshot: [docs/screenshots/milestone-5/grafana-dashboard-overview.png](docs/screenshots/milestone-5/grafana-dashboard-overview.png)
+
 ---
 
 ## Roadmap
 
-### Milestone 5
-
-- Time to first review
-- Average time to merge
-- Review turnaround metrics
-- Review backlog metrics
-
 ### Milestone 6
 
+- Dashboard provisioning
+- Automatic Grafana imports
+- Persistent dashboards
+- Dashboard version control improvements
+
+### Milestone 7
+
 - Multi-repository support
+- Team aggregation
 - Historical trend analysis
-- Dashboard improvements
-- Team-level aggregation
+
+### Milestone 8
+
+- Java implementation
+- Go vs Java comparison
+- Performance comparison
+- Maintainability comparison
 
 ## Project Journey
 
