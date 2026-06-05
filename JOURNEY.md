@@ -427,3 +427,103 @@ This allowed dashboard panels to correctly display green, yellow and red states.
 ### Status
 
 Milestone 4 Complete ✅
+
+---
+
+# 2026-06-05
+
+## Milestone 5 – Engineering Flow Metrics
+
+### Objective
+
+Move beyond basic pull request counts and introduce metrics that provide insight into engineering flow.
+
+### Metrics Added
+
+#### Review Metrics
+
+* Review Backlog
+* Waiting For Review
+* Average Time To First Review
+
+#### Delivery Metrics
+
+* Average Time To Merge
+
+### Dashboard Evolution
+
+The dashboard evolved from simple repository activity tracking into a lightweight engineering observability platform.
+
+The focus shifted from:
+
+* How many pull requests exist?
+
+to:
+
+* How quickly are pull requests reviewed?
+* How quickly are pull requests merged?
+* Where are review bottlenecks forming?
+
+### Dashboard Screenshot
+
+[docs/screenshots/milestone-5/grafana-dashboard-overview.png](docs/screenshots/milestone-5/grafana-dashboard-overview.png)
+
+### Key Learnings
+
+#### GitHub Review Requests
+
+A useful discovery was that review requests and completed reviews represent different states.
+
+A pull request may:
+
+* Have no active review request
+* Already have completed reviews
+* Be approved and ready to merge
+
+This led to simplification of dashboard metrics and removal of less useful indicators.
+
+#### Engineering Metrics vs Activity Metrics
+
+Simple counts are easy to collect but provide limited operational value.
+
+Metrics such as:
+
+* Time To First Review
+* Time To Merge
+* Review Backlog
+
+provide a much better view of engineering flow and delivery performance.
+
+### Current Architecture
+
+GitHub GraphQL API
+↓
+Go Exporter
+↓
+Prometheus
+↓
+Grafana
+↓
+Engineering Flow Metrics
+
+### Status
+
+Milestone 5 Complete ✅
+
+### Next
+
+Milestone 6
+
+* Grafana provisioning
+* Dashboard-as-code
+* Persistent dashboards
+* Dashboard version control
+
+Longer term:
+
+* Java implementation
+* Multi-repository support
+* Engineering trend analysis
+
+---
+
