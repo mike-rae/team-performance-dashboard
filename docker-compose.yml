@@ -3,40 +3,31 @@ services:
   exporter:
     build: .
     container_name: github-exporter
-
     env_file:
       - .env
-
     ports:
       - "2112:2112"
 
   prometheus:
     image: prom/prometheus:latest
-
     container_name: prometheus
-
     ports:
       - "9090:9090"
-
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-
     depends_on:
       - exporter
 
   grafana:
     image: grafana/grafana:latest
-
     container_name: grafana
-
     ports:
       - "3000:3000"
-
     depends_on:
       - prometheus
-
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
 
 # Persistent volumes
 volumes:
