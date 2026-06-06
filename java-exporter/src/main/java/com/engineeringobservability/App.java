@@ -4,20 +4,29 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
+import com.engineeringobservability.config.AppConfig;
 import com.sun.net.httpserver.HttpServer;
 
 import io.prometheus.metrics.core.metrics.Gauge;
 import io.prometheus.metrics.exporter.httpserver.HTTPServer;
 
 public class App {
+    private static final Gauge exporterMetadata = Gauge.builder()
+            .name("java_exporter_metadata")
+            .help("Java exporter information.")
+            .register();
+
     public static void main(String[] args) throws IOException {
+        AppConfig config = AppConfig.load();
+
+        System.out.printf(
+                "Loaded config for %s/%s%n",
+                config.githubOwner(),
+                config.githubRepo());
+
         startHealthServer();
 
-        Gauge.builder()
-                .name("java_exporter_metadata")
-                .help("Java exporter information.")
-                .register()
-                .set(1);
+        exporterMetadata.set(2);
 
         HTTPServer metricsServer = HTTPServer.builder()
                 .port(2113)
