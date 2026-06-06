@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 import com.engineeringobservability.config.AppConfig;
+import com.engineeringobservability.github.GitHubClient;
 import com.sun.net.httpserver.HttpServer;
 
 import io.prometheus.metrics.core.metrics.Gauge;
@@ -16,7 +17,13 @@ public class App {
             .help("Java exporter information.")
             .register();
 
-    public static void main(String[] args) throws IOException {
+    private static final Gauge pullRequests = Gauge.builder()
+            .name("java_github_pull_requests")
+            .help("Number of GitHub pull requests by state.")
+            .labelNames("owner", "repo", "state")
+            .register();
+
+    public static void main(String[] args) throws IOException, InterruptedException {
         AppConfig config = AppConfig.load();
 
         System.out.printf(
@@ -24,9 +31,33 @@ public class App {
                 config.githubOwner(),
                 config.githubRepo());
 
+        GitHubClient gitHubClient = new GitHubClient(config.githubToken());
+
+        String[] states = { "OPEN", "CLOSED", "MERGED" };
+
+        for (String state : states) {
+
+            int count = gitHubClient.pullRequestCount(
+                    config.githubOwner(),
+                    config.githubRepo(),
+                    state);
+
+            pullRequests
+                    .labelValues(
+                            config.githubOwner(),
+                            config.githubRepo(),
+                            state.toLowerCase())
+                    .set(count);
+
+            System.out.printf(
+                    "%s PRs: %d%n",
+                    state,
+                    count);
+        }
+
         startHealthServer();
 
-        exporterMetadata.set(2);
+        exporterMetadata.set(2888);
 
         HTTPServer metricsServer = HTTPServer.builder()
                 .port(2113)
