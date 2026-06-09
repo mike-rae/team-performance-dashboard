@@ -527,3 +527,57 @@ Longer term:
 
 ---
 
+# 2026-06-09
+
+## Milestone 7 – Java Exporter Spike
+
+### Objective
+
+Create a smaller Java implementation of the GitHub metrics exporter to compare the developer experience with the Go implementation.
+
+### What Was Completed
+
+- Created Java Maven project
+- Added Java health endpoint
+- Added Java Prometheus metrics endpoint
+- Loaded configuration from environment variables and `.env`
+- Added GitHub GraphQL client using Java HTTP client and Jackson
+- Exposed Java pull request metrics:
+  - Pull request counts by state
+  - Open pull request age
+  - Stale pull request count
+- Added Java exporter to Docker Compose
+- Added Prometheus scrape configuration for the Java exporter
+
+### Screenshots
+
+Java exporter metrics:
+
+[java-exporter-metrics.png](docs/screenshots/milestone-7/java-exporter-metrics.png)
+
+Prometheus target:
+
+[java-prometheus-target-up.png](docs/screenshots/milestone-7/java-prometheus-target-up.png)
+
+### Decision
+
+The Java exporter is intentionally smaller than the Go exporter.
+
+The goal was not to recreate every metric, but to prove that the same observability pipeline can be implemented in Java:
+
+```text
+GitHub GraphQL API
+        ↓
+Java Exporter
+        ↓
+Prometheus
+        ↓
+Grafana / PromQL
+```
+
+### Status
+
+Milestone 7 Complete ✅
+
+---
+

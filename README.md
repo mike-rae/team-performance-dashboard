@@ -58,6 +58,7 @@ Grafana
 | M4 Grafana Dashboard        | ✅      |
 | M5 Engineering Flow Metrics | ✅      |
 | M6 Dashboard Provisioning   | ✅      |
+| M7 Java Exporter Spike | ✅ |
 
 ## Quick Start
 
@@ -78,6 +79,25 @@ Open:
 
 * [Setup Guide](docs/SETUP.md)
 * [Project Journey](JOURNEY.md)
+
+## Java Exporter
+
+A Java exporter spike is available under:
+
+```text
+java-exporter/
+```
+The Java implementation currently supports:
+
+* ```/health```
+* ```/metrics```
+
+Specific metrics are:
+- GitHub pull request counts by state
+- Open pull request age
+- Stale pull request count
+
+This Java implementation is intentionally smaller than the Go exporter and is used to compare Java and Go approaches for GitHub GraphQL and Prometheus metric export.
 
 ## Roadmap
 
