@@ -102,14 +102,15 @@ This Java implementation is intentionally smaller than the Go exporter and is us
 ## Roadmap
 
 ### Milestone 7
+* Java implementation
 
+### Milestone 8
 * Multi-repository support
 * Team aggregation
 * Historical trend analysis
 
-### Milestone 8
+### Milestone 9
 
-* Java implementation
 * Go vs Java comparison
 * Performance comparison
 * Maintainability comparison
